@@ -1,0 +1,6 @@
+framework module Pods_TravlrTests {
+  umbrella header "Pods-TravlrTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

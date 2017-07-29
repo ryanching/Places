@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>577764952962-c6jpv9g96nj2vqbptd8bnbj9hm0kkh9r.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.577764952962-c6jpv9g96nj2vqbptd8bnbj9hm0kkh9r</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDURAq5MgxYCCsZmTFCQzkY8SrMJT7fWBI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>577764952962</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ryanching.Travlr</string>
+	<key>PROJECT_ID</key>
+	<string>travlr-ba337</string>
+	<key>STORAGE_BUCKET</key>
+	<string>travlr-ba337.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:577764952962:ios:5271ac3721a2d511</string>
+	<key>DATABASE_URL</key>
+	<string>https://travlr-ba337.firebaseio.com</string>
+</dict>
+</plist>
