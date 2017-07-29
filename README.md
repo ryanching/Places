@@ -1,2 +1,0 @@
-# places
-ios mobile app 
