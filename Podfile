@@ -15,7 +15,7 @@ target 'Travlr' do
   pod 'DKImagePickerController'
   pod 'Agrume', :git => 'https://github.com/JanGorman/Agrume.git'
   pod 'IQKeyboardManagerSwift'
-  pod 'iCarousel'
+
 
   target 'TravlrTests' do
     inherit! :search_paths
