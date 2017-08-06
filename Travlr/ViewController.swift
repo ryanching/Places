@@ -31,7 +31,6 @@ class ViewController: UIViewController, GMSMapViewDelegate {
     var longPressEnabled: Bool = false
     
     var mapView: GMSMapView!
-    //let mapView: GMSMapView!
     
     var markers: Array<GMSMarker> = []
     var persistentMarkers: [NSManagedObject] = []
@@ -45,12 +44,19 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         mapView.delegate = self
         view = mapView
+//        let southWest = CLLocationCoordinate2D(latitude: 40.712216, longitude: -74.22655)
+//        let northEast = CLLocationCoordinate2D(latitude: 40.773941, longitude: -74.12544)
+//        let overlayBounds = GMSCoordinateBounds(coordinate: southWest, coordinate: northEast)
+//        let overlay = GMSGroundOverlay(bounds: overlayBounds, icon: UIImage(named: "plus"))
+//        overlay.map = mapView
         do {
             // Set the map style by passing a valid JSON string.
             mapView.mapStyle = try GMSMapStyle(jsonString: kMapStyle)
         } catch {
             NSLog("One or more of the map styles failed to load. \(error)")
         }
+        
+        //let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MarkerViewController.dismissKeyboard))
         
         if let uid = Auth.auth().currentUser?.uid {
             Database.database().reference().child(uid).child("markers").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -60,18 +66,21 @@ class ViewController: UIViewController, GMSMapViewDelegate {
                     print((child as! DataSnapshot).key)
                     let coords = (child as! DataSnapshot).key.replacingOccurrences(of: "d", with: ".").components(separatedBy: ",")
                     let lat = coords[0]
-                    let lon = coords[1]
-                    print((child as! DataSnapshot).childSnapshot(forPath: "title").value!)
-                    print((child as! DataSnapshot).childSnapshot(forPath: "date").value!)
-                    print((child as! DataSnapshot).childSnapshot(forPath: "description").value!)
+                    let lon = coords[1]                   
                     var data: Dictionary<String, Array<String>> = [:]
                     var names: [String] = []
+                   // var iconImage: UIImage? = nil
                     if((child as! DataSnapshot).childSnapshot(forPath: "imageNames").childrenCount > 0){
+                   //     var iconImageSet = false
                         for c in (child as! DataSnapshot).childSnapshot(forPath: "imageNames").children.allObjects {
                             let name = (c as! DataSnapshot).value as! String
+//                            if(iconImageSet == false){
+//                                let docDir = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+//                                let imageURL = docDir.appendingPathComponent(name)
+//                                iconImage = UIImage(contentsOfFile: imageURL.path)!
+//                                iconImageSet = true
+//                            }
                             print(name)
-                            //(data["imageNames"])?.append(name)
-                            //data["imageNames"]?.append(name)
                             names.append(name)
                         }
                     }
@@ -84,10 +93,14 @@ class ViewController: UIViewController, GMSMapViewDelegate {
                     m.snippet = (child as! DataSnapshot).childSnapshot(forPath: "date").value! as? String
                     print(data.description)
                     m.userData = data
+                    //m.icon = iconImage
+                    
+                    m.iconView?.isUserInteractionEnabled = true
+                    let longPress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.removeMarker))
+                    m.iconView?.addGestureRecognizer(longPress)                    
+                    
                     self.markers.append(m)
                     m.map = self.mapView
-                    
-                    
                 }
                 
             }) { (error) in
@@ -113,9 +126,19 @@ class ViewController: UIViewController, GMSMapViewDelegate {
        
     }
     
+    func removeMarker(){
+        print("REMOVE MARKERRRRRR")
+    }
+    
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         
         
+    }
+    
+    func mapView(_ mapView: GMSMapView, didLongPressInfoWindowOf marker: GMSMarker) {
+        print("longPressed")
     }
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
@@ -125,17 +148,16 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         print(marker.description)
         nextViewController.markers = self.markers
         nextViewController.location = marker.position
+        nextViewController.markerWasSaved = true
+        
         self.navigationController?.pushViewController(nextViewController, animated: true)
-        
-        
     }
     
+    
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
-//        if(longPressEnabled == true){
+        if(longPressEnabled == true){
             let marker = GMSMarker(position: coordinate)
-            //marker.title = "Hello World"
             marker.map = mapView
-       //     marker.userData = [DKAsset]()
             marker.snippet = " "
             markers.append(marker)
                             
@@ -151,7 +173,7 @@ class ViewController: UIViewController, GMSMapViewDelegate {
                 self.navigationController?.pushViewController(nextViewController, animated: true)
             }
             
-        //}
+        }
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -175,7 +197,6 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
         longPressEnabled = true
-        print(markers)
     }
   
     

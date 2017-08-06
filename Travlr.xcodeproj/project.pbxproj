@@ -646,7 +646,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7A5A709696AA84F96C39B7FC /* Pods-Travlr.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				DEVELOPMENT_TEAM = TNYKHNSDV6;
 				INFOPLIST_FILE = Travlr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -663,7 +663,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 34500665427DAA7A60AB8CC4 /* Pods-Travlr.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				DEVELOPMENT_TEAM = TNYKHNSDV6;
 				INFOPLIST_FILE = Travlr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

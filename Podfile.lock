@@ -53,6 +53,8 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.10)
+  - iCarousel (1.8.3)
+  - IQKeyboardManagerSwift (4.0.9)
 
 DEPENDENCIES:
   - Agrume (from `https://github.com/JanGorman/Agrume.git`)
@@ -63,6 +65,8 @@ DEPENDENCIES:
   - Firebase/Storage
   - GoogleMaps
   - GooglePlaces
+  - iCarousel
+  - IQKeyboardManagerSwift
 
 EXTERNAL SOURCES:
   Agrume:
@@ -87,7 +91,9 @@ SPEC CHECKSUMS:
   GooglePlaces: bca867d5e9da15384c794b945e4226848bc6e9d9
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
+  iCarousel: d782f635afac190c49bb8ee455882284cff8b85f
+  IQKeyboardManagerSwift: 2eefe6c429b86aa08bfbc1b5c891164d754adf91
 
-PODFILE CHECKSUM: ba94f4495696f7a452e3788473245e59975278b3
+PODFILE CHECKSUM: 30ece21e3121a64eda1a3ed605bd443821644ad1
 
 COCOAPODS: 1.2.1

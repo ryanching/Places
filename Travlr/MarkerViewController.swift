@@ -25,16 +25,18 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var collectionView: UICollectionView!
     
-  //  var images = ["plus",]
     var assets = [UIImage]()
     var imageNames = [String]()
+    var cells = [UICollectionViewCell]()
     var location: CLLocationCoordinate2D!
     var marker: GMSMarker!
-    //var people: [NSManagedObject] = []
     var dataPath: URL!
     
     var markers: Array<GMSMarker> = []
-
+    var backButton: UIButton!
+    var deleteButton: UIButton!
+    var markerWasSaved = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,16 +45,37 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.descriptionTextView.delegate = self
         collectionView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(MarkerViewController.tap)))
         
+        //add back button
+        self.backButton = UIButton(frame: CGRect(x: 5, y: 55, width: 50, height: 50))
+        let backButtonLabel = UILabel(frame: CGRect(x: 18, y: 0, width:50, height:50))
+        backButtonLabel.text = "Back"
+        backButtonLabel.textColor = UIColor.white
+        backButtonLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 12)
+        backButton.addSubview(backButtonLabel)
+        backButton.addTarget(self, action: #selector(popToMap), for: .touchUpInside)
+        view.addSubview(backButton)
+        
+        //add delete button
+        self.deleteButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.width-60, y: 55, width: 50, height: 90))
+        let deleteButtonLabel = UILabel(frame: CGRect(x: 18, y: 0, width:50, height:50))
+        deleteButtonLabel.text = "Delete \nMarker"
+        deleteButtonLabel.numberOfLines = 0
+        deleteButtonLabel.textColor = UIColor.white
+        deleteButtonLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 8.0)
+        deleteButton.addSubview(deleteButtonLabel)
+        deleteButton.addTarget(self, action: #selector(deleteMarker), for: .touchUpInside)
+        view.addSubview(deleteButton)
+        
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         dataPath = documentsDirectory.appendingPathComponent("MyFolder")
         
         do {
             try FileManager.default.createDirectory(atPath: dataPath.path, withIntermediateDirectories: true, attributes: nil)
-            print("hi")
             
         } catch let error as NSError {
             print("Error creating directory: \(error.localizedDescription)")
         }
+        
         
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MarkerViewController.dismissKeyboard))
@@ -63,7 +86,8 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
         view.addGestureRecognizer(swipe)
         descriptionTextView.textColor = UIColor.gray
         
-        if(marker.title != nil){
+        
+        if(marker.title != nil && marker.title != " "){
             titleTextField.text = marker.title
         }
         if(marker.snippet != nil && marker.snippet != " "){
@@ -72,92 +96,43 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         //check if marker info exists in firebase. If it does, load up photos and stuff
         print("testing: ")
-        if let uid = Auth.auth().currentUser?.uid {
-            let locationID = (String(format:"%f", location.latitude) + "," + String(format:"%f", location.longitude)).replacingOccurrences(of: ".", with: "d")
-            Database.database().reference().child(uid).child("markers").child(locationID).observeSingleEvent(of: .value, with: { (snapshot) in
-            //    let value = snapshot.value as? NSDictionary
-                if(self.marker.userData != nil && (self.marker.userData as! Dictionary<String, Array<String>>)["imageNames"] != nil){                    let names = (self.marker.userData as! Dictionary<String, Array<String>>)["imageNames"]
-                    print(names!)
-                    for imageName in names!{
-                        print(imageName)
-                        let docDir = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                        let imageURL = docDir.appendingPathComponent(imageName)
-                        
-                        let newImage = UIImage(contentsOfFile: imageURL.path)!
-                        self.assets.append(newImage)
-                        self.collectionView.reloadData()
 
-                    }
+        if(self.marker.userData != nil && (self.marker.userData as! Dictionary<String, Array<String>>)["imageNames"] != nil){                    let names = (self.marker.userData as! Dictionary<String, Array<String>>)["imageNames"]
+            print(names!)
+            for imageName in names!{
+                print("ryan")
+                print(imageName)
+                let docDir = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                let imageURL = docDir.appendingPathComponent(imageName)
+                if(FileManager.default.fileExists(atPath: imageURL.path)){
+                    let newImage = UIImage(contentsOfFile: imageURL.path)!
+                    self.assets.append(newImage)
+                    self.collectionView.reloadData()
                 }
-                else{
-                    print("No images stored in this child")
-                    //print(self.marker.userData!)
-                    //print(self.marker.description)
-                }
-                
-                if(self.marker.userData != nil && (self.marker.userData as! Dictionary<String, Array<String>>)["description"] != nil && (self.marker.userData as! Dictionary<String, Array<String>>)["description"]?[0] != nil){//value?["description"] as? String != nil){
-                    print("we in")
-                    self.descriptionTextView.text = (self.marker.userData as! Dictionary<String, Array<String>>)["description"]?[0]
-                    //self.descriptionTextView.text = value?["description"] as! String
-                    if(self.descriptionTextView.text != "Description"){
-                        self.descriptionTextView.textColor = UIColor.black
-                    }
-                    print("we out")
-                }
-                else{
-                    print("No description stored in this child")
-                }
-//                if(marker.title != nil){//value?["title"] as? String != nil){
-//                    print(value?["title"] as! String)
-//                }
-//                else{
-//                    print("No title stored in this child")
-//                }
-//                if(value?["date"] as? String != nil){
-//                    print(value?["date"] as! String)
-//                }
-//                else{
-//                    print("No date stored in this child")
-//                }
-                
-                
-            }) { (error) in
-                print(error.localizedDescription)
             }
-            
-            
-            
-            
-            
-//            Database.database().reference().child(uid).child("markers").observeSingleEvent(of: .value, with: { (snapshot) in
-//                let value = snapshot.value as? NSDictionary
-//                
-//                let keys = value?.allKeys
-//                print("keys: ")
-//                if(keys != nil){
-//                    for key in keys!{
-//                        print(key)
-//                    }
-//                }
-//               
-//                
-//                
-//            }) { (error) in
-//                print(error.localizedDescription)
-//            }
-            
-            
-            
-            
-            
-            
-            
+        }
+        else{
+            print("No images stored in this child")
+        }
+     
+        if(self.marker.userData != nil && (self.marker.userData as! Dictionary<String, Array<String>>)["description"] != nil && (self.marker.userData as! Dictionary<String, Array<String>>)["description"]?[0] != nil){
+            self.descriptionTextView.text = (self.marker.userData as! Dictionary<String, Array<String>>)["description"]?[0]
+            if(self.descriptionTextView.text != "Description"){
+                self.descriptionTextView.textColor = UIColor.black
+            }
+        }
+        else{
+            print("No description stored in this child")
         }
 
     }
 
     //display tab bar if going back to map
     override func viewWillDisappear(_ animated: Bool) {
+        if(self.markerWasSaved == false){
+            self.marker.map = nil
+        }
+        
         self.tabBarController?.tabBar.isHidden = false
     }
     
@@ -198,7 +173,6 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
                         asset.fetchFullScreenImage(true, completeBlock: { (image, info) in
                             self.assets.append(image!)
                         })
-                        //self.assets.append(asset)
                     }
                     self.collectionView!.reloadData()
                 }
@@ -237,36 +211,60 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
-    //number of items in the collection view
+    //number of items in the collection view number of images displayed. Plus 1 because of plus image
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //number of images displayed. Plus 1 because of plus image
-        
         print(self.assets.count + 1)
         return self.assets.count + 1
     }
+    
     
     //Loads cells in collection view
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as! ImageCollectionViewCellController
         if(indexPath.row == (collectionView.numberOfItems(inSection: 0)-1)){
             cell.cellImageView.image = UIImage(named: "plus")
-            
-            //let imageData = UIImagePNGRepresentation(image)!
+            //cell.cellImageView.frame.size.height = 70
+            //cell.cellImageView.frame.size.width = 70
             
         }
         else{
-            let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
             cell.cellImageView.image = assets[indexPath.row]
-   
-            //assets[indexPath.row].fetch
-//            assets[indexPath.row].fetchFullScreenImage(false, completeBlock: { image, info in
-//                cell.cellImageView.image = image
-//
-//                
-//            })
-            
         }
-            return cell
+        
+        let lpg = UILongPressGestureRecognizer(target: self, action: #selector(MarkerViewController.longPressCell))
+        cell.addGestureRecognizer(lpg)
+        
+        self.cells.append(cell)
+        
+        return cell
+        
+    }
+    
+
+    
+    func longPressCell(){
+        print("longpresscell")
+        let numCells = self.collectionView.numberOfItems(inSection: 0)
+        for index in 0...(numCells-1){
+            print(index)
+            
+            let cell = self.collectionView.cellForItem(at: [0,index])
+            let deleteButton = UIButton(frame: CGRect(x: 5, y: 5, width: 50, height: 90))
+            let deleteButtonLabel = UILabel(frame: CGRect(x: 0, y: 0, width:50, height:50))
+            deleteButtonLabel.text = "Delete Pic"
+            deleteButtonLabel.numberOfLines = 0
+            deleteButtonLabel.textColor = UIColor.white
+            deleteButtonLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 8.0)
+            deleteButton.addSubview(deleteButtonLabel)
+            deleteButton.addTarget(self, action: #selector(deleteMarker), for: .touchUpInside)
+            cell?.addSubview(deleteButton)
+        }
+        
+        
+    }
+    
+    func deleteImage(){
+        print("delete image tapped")
     }
     
     //long press on a photo.. do something with this later
@@ -293,6 +291,7 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
   //  @available(iOS 10.0, *)
     @IBAction func save(_ sender: Any) {
         print("save button hit")
+        self.markerWasSaved = true
         let nextViewController = self.navigationController?.viewControllers[0] as! ViewController
         let count = nextViewController.markers.count - 1
         if((self.titleTextField.text?.isEmpty)! || (self.dateTextField.text?.isEmpty)! || (self.descriptionTextView.text?.isEmpty)!){
@@ -411,38 +410,40 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
 //            print("Could not save. \(error), \(error.userInfo)")
 //        }
         
-        self.navigationController?.popToRootViewController(animated: true)
+
+        marker.map = nextViewController.mapView
+        popToMap()
+        //self.navigationController?.popToRootViewController(animated: true)
         
     }
     
-//    func uploadImages(){
-////        nextViewController.markers.append(marker)
-//
-//        let randomName = randomStringWithLenth(length: 10)
-//        let uploadRef = Storage.storage().reference().child("images/\(randomName).jpg")
-//
-//        var images = [UIImage]()
-//        for asset in assets{
-//            asset.fetchFullScreenImage(true, completeBlock: { (image, info) in
-//                images.append(image!)
-//            })
-//        }
-//        
-//        for image in images {
-////            let imageData = UIImageJPEGRepresentation(image, 1.0)!
-////            uploadRef.putData(imageData, metadata: nil) { (metadata, error) in
-////                if(error == nil){
-////                    print("Success")
-////                }
-////                else{
-////                    print("error")
-////                }
-////            }
-//        }
-//
-//        
-//    }
+    func popToMap(){
+        self.navigationController?.popToRootViewController(animated: true)
+    }
     
+    func deleteMarker(){
+        print("deleting")
+        if let uid = Auth.auth().currentUser?.uid {
+            let locationID = (String(format:"%f", location.latitude) + "," + String(format:"%f", location.longitude)).replacingOccurrences(of: ".", with: "d")
+            Database.database().reference().child(uid).child("markers").child(locationID).removeValue()
+            self.marker.map = nil
+            
+            //delete image data from locally stored file
+            if(self.marker.userData != nil && (self.marker.userData as! Dictionary<String, Array<String>>)["imageNames"] != nil){                    let names = (self.marker.userData as! Dictionary<String, Array<String>>)["imageNames"]
+                print(names!)
+                for imageName in names!{
+                    
+                    print(imageName)
+                    let docDir = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                    var imageURL = docDir.appendingPathComponent(imageName)
+                    imageURL.deletePathExtension()
+                }
+            }
+
+            
+            popToMap()
+        }
+    }
     
     func randomStringWithLenth(length: Int) -> String {
         let characters: NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
@@ -478,9 +479,6 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
         //Causes the view (or one of its embedded text fields) to resign the first responder status and drop into background
         view.endEditing(true)
     }
-    
-   
-    
     
     /*
     // MARK: - Navigation
