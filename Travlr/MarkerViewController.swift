@@ -18,7 +18,7 @@ import FirebaseDatabase
 import FirebaseStorage
 
 
-class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITextViewDelegate {
+class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITextViewDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var dateTextField: UITextField!
@@ -75,9 +75,7 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
         } catch let error as NSError {
             print("Error creating directory: \(error.localizedDescription)")
         }
-        
-        
-        
+    
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MarkerViewController.dismissKeyboard))
         let swipe: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector (MarkerViewController.dismissKeyboard))
         let pan: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector (MarkerViewController.dismissKeyboard))
@@ -86,7 +84,6 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
         view.addGestureRecognizer(swipe)
         descriptionTextView.textColor = UIColor.gray
         
-        
         if(marker.title != nil && marker.title != " "){
             titleTextField.text = marker.title
         }
@@ -94,13 +91,9 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
             dateTextField.text = marker.snippet
         }
         
-        //check if marker info exists in firebase. If it does, load up photos and stuff
-        print("testing: ")
-
+        //check if marker info exists in firebase. If it does, load up photos and metadata
         if(self.marker.userData != nil && (self.marker.userData as! Dictionary<String, Array<String>>)["imageNames"] != nil){                    let names = (self.marker.userData as! Dictionary<String, Array<String>>)["imageNames"]
-            print(names!)
             for imageName in names!{
-                print("ryan")
                 print(imageName)
                 let docDir = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
                 let imageURL = docDir.appendingPathComponent(imageName)
@@ -155,7 +148,7 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     //When collection view cell is tapped, check if its the plus. if so, add photos. If its a photo, display using agrume
     //If its a video, call play video function
-    func tap(sender: UITapGestureRecognizer){
+    @objc func tap(sender: UITapGestureRecognizer){
         
         if let indexPath = self.collectionView?.indexPathForItem(at: sender.location(in: self.collectionView)) {
             let cell = self.collectionView?.cellForItem(at: indexPath)
@@ -179,23 +172,8 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
                 self.present(pickerController, animated: true) {}
                 return
             }
-            //let asset = self.assets[indexPath.row]
-            //if asset is a video then play the video, else display images fullscreen
+
             if((indexPath.row == (collectionView.numberOfItems(inSection: 0)-1))==false){ //if not plus image
-//                if asset.isVideo{
-//                    asset.fetchAVAssetWithCompleteBlock { (avAsset, info) in
-//                        DispatchQueue.main.async(execute: { () in
-//                            self.playVideo(avAsset!)
-//                        })
-//                    }
-//                }
-//                else{
-//                    var images = [UIImage]()
-//                    for asset in assets{
-//                        asset.fetchFullScreenImage(true, completeBlock: { (image, info) in
-//                            images.append(image!)
-//                        })
-//                    }
                     let agrume = Agrume(images: self.assets, startIndex: indexPath.row, backgroundBlurStyle: .light)
                     agrume.didScroll = { [unowned self] index in
                         self.collectionView?.scrollToItem(at: IndexPath(row: index, section: 0),
@@ -217,10 +195,15 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
         return self.assets.count + 1
     }
     
-    
+    func upswipe(){
+        print("upswipe")
+        print("upswipe!@!!@@!@$^#&*$%!*&@#^$!&*@^#$%!*&#@")
+    }
     //Loads cells in collection view
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath) as! ImageCollectionViewCellController
+        
+       
         if(indexPath.row == (collectionView.numberOfItems(inSection: 0)-1)){
             cell.cellImageView.image = UIImage(named: "plus")
             //cell.cellImageView.frame.size.height = 70
@@ -233,38 +216,33 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         let lpg = UILongPressGestureRecognizer(target: self, action: #selector(MarkerViewController.longPressCell))
         cell.addGestureRecognizer(lpg)
-        
         self.cells.append(cell)
-        
         return cell
         
     }
     
-
     
-    func longPressCell(){
+    @objc func longPressCell(){
         print("longpresscell")
         let numCells = self.collectionView.numberOfItems(inSection: 0)
-        for index in 0...(numCells-1){
-            print(index)
-            
-            let cell = self.collectionView.cellForItem(at: [0,index])
-            let deleteButton = UIButton(frame: CGRect(x: 5, y: 5, width: 50, height: 90))
+        print(numCells);
+        for cell in self.collectionView.visibleCells{
+            let deleteButton = UIButton(frame: CGRect(x: cell.frame.size.width-15, y: 5, width: 50, height: 90))
             let deleteButtonLabel = UILabel(frame: CGRect(x: 0, y: 0, width:50, height:50))
             deleteButtonLabel.text = "Delete Pic"
             deleteButtonLabel.numberOfLines = 0
             deleteButtonLabel.textColor = UIColor.white
             deleteButtonLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 8.0)
             deleteButton.addSubview(deleteButtonLabel)
-            deleteButton.addTarget(self, action: #selector(deleteMarker), for: .touchUpInside)
-            cell?.addSubview(deleteButton)
+            deleteButton.addTarget(self, action: #selector(deleteImage), for: .touchUpInside)
+            cell.addSubview(deleteButton)
         }
         
         
     }
     
-    func deleteImage(){
-        print("delete image tapped")
+    @objc func deleteImage(){        
+            print("delete image tapped")
     }
     
     //long press on a photo.. do something with this later
@@ -288,14 +266,12 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     //On save, update map's marker array with photos, title, date, description
-  //  @available(iOS 10.0, *)
     @IBAction func save(_ sender: Any) {
         print("save button hit")
         self.markerWasSaved = true
         let nextViewController = self.navigationController?.viewControllers[0] as! ViewController
-        let count = nextViewController.markers.count - 1
         if((self.titleTextField.text?.isEmpty)! || (self.dateTextField.text?.isEmpty)! || (self.descriptionTextView.text?.isEmpty)!){
-            print("stuff was empty")
+            print("Some fields were empty")
             if(self.titleTextField.text?.isEmpty)!{
                 titleTextField.text = " "
             }
@@ -303,18 +279,9 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
                 dateTextField.text = " "
             }
         }
-        
         marker.title = titleTextField.text
         marker.snippet = dateTextField.text
-        
-        
-        //var imagess = [UIImage]()
-//        for asset in assets{
-//            asset.fetchFullScreenImage(true, completeBlock: { (image, info) in
-//                imagess.append(image!)
-//            })
-//        }
-        
+
         for image in self.assets {
             let imageName = UUID().uuidString + ".png"
             let imageData = UIImagePNGRepresentation(image)!
@@ -325,7 +292,7 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
             //let newImage = UIImage(contentsOfFile: imageURL.path)!
         }
         
-        print("Saving to fb...")
+        print("Saving to firebase...")
         if let uid = Auth.auth().currentUser?.uid {
             let postObject: Dictionary<String, Any> = [
                 "uid" : uid,
@@ -336,7 +303,6 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
                 "date" : dateTextField.text!,
                 "description" : descriptionTextView.text!
                 ]
-            
             let locationID = (String(format:"%f", location.latitude) + "," + String(format:"%f", location.longitude)).replacingOccurrences(of: ".", with: "d")
             Database.database().reference().child(uid).child("markers").child(locationID).setValue(postObject)
             var data: Dictionary<String, Array<String>> = [:]
@@ -344,84 +310,19 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
             let desc: [String] = [descriptionTextView.text]
             data["description"] = desc
             self.marker.userData = data
-
-//            var markerPostObject: Dictionary<String, String> = [:]
-//            for m in self.markers{
-//                if(m.isEqual(marker)){
-//                    markerPostObject[locationID] = self.titleTextField.text! + "," + self.dateTextField.text!
-//                    print("samw marjer")
-//                }
-//                else{
-//                    let lid = (String(format:"%f", m.position.latitude) + "," + String(format:"%f", m.position.longitude)).replacingOccurrences(of: ".", with: "d")
-//                    markerPostObject[lid] = m.title! + "," + m.snippet!
-//                    print("dif marker")
-//                }
-//            }
-//            Database.database().reference().child(uid).child("markers").child(locationID).setValue(markerPostObject)
-
             
         }
-        
-       
-
-        
-        //uploadImages()
-//        nextViewController.markers.append(marker)
-//        
-//        let randomName = randomStringWithLenth(length: 10)
-//        let uploadRef = Storage.storage().reference().child("images/\(randomName)")
-//        uploadRef.putData(marker, metadata: nil) { (metadata, error) in
-//            if(error == nil){
-//                print("Success")
-//            }
-//            else{
-//                print("error")
-//            }
-//        }
-        
-//        guard let appDelegate =
-//            UIApplication.shared.delegate as? AppDelegate else {
-//                return
-//        }
-//        
-//        // 1
-//        let managedContext =
-//            appDelegate.persistentContainer.viewContext
-//        
-//        // 2
-//        let entity =
-//            NSEntityDescription.entity(forEntityName: "PersistentMarker",
-//                                       in: managedContext)!
-//        
-//        let person = NSManagedObject(entity: entity,
-//                                     insertInto: managedContext)
-//        
-//        let name = marker
-//        
-//        
-//        // 3
-//        person.setValue(name, forKeyPath: "userData")
-//        
-//        // 4
-//        do {
-//            try managedContext.save()
-//            people.append(person)
-//        } catch let error as NSError {
-//            print("Could not save. \(error), \(error.userInfo)")
-//        }
-        
-
         marker.map = nextViewController.mapView
         popToMap()
-        //self.navigationController?.popToRootViewController(animated: true)
         
     }
     
-    func popToMap(){
+    @objc func popToMap(){
         self.navigationController?.popToRootViewController(animated: true)
     }
     
-    func deleteMarker(){
+    //deletes marker from firebase and images stored within marker
+    @objc func deleteMarker(){
         print("deleting")
         if let uid = Auth.auth().currentUser?.uid {
             let locationID = (String(format:"%f", location.latitude) + "," + String(format:"%f", location.longitude)).replacingOccurrences(of: ".", with: "d")
@@ -430,21 +331,18 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             //delete image data from locally stored file
             if(self.marker.userData != nil && (self.marker.userData as! Dictionary<String, Array<String>>)["imageNames"] != nil){                    let names = (self.marker.userData as! Dictionary<String, Array<String>>)["imageNames"]
-                print(names!)
                 for imageName in names!{
-                    
                     print(imageName)
                     let docDir = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
                     var imageURL = docDir.appendingPathComponent(imageName)
                     imageURL.deletePathExtension()
                 }
             }
-
-            
             popToMap()
         }
     }
     
+    //returns a random string with parameter length
     func randomStringWithLenth(length: Int) -> String {
         let characters: NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         let randomString: NSMutableString = NSMutableString(capacity: length)
@@ -475,19 +373,10 @@ class MarkerViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     //dismiss keyboard function
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status and drop into background
         view.endEditing(true)
     }
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

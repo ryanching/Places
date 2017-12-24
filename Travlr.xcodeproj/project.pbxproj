@@ -21,11 +21,10 @@
 		D68C5FD21ECFE00100CB667A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68C5FD11ECFE00100CB667A /* ViewController.swift */; };
 		D68C5FD51ECFE00100CB667A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D68C5FD31ECFE00100CB667A /* Main.storyboard */; };
 		D68C5FDA1ECFE00100CB667A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D68C5FD81ECFE00100CB667A /* LaunchScreen.storyboard */; };
-		D68C5FE51ECFE00100CB667A /* TravlrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68C5FE41ECFE00100CB667A /* TravlrTests.swift */; };
 		D68C5FF01ECFE00100CB667A /* TravlrUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68C5FEF1ECFE00100CB667A /* TravlrUITests.swift */; };
-		D68C5FFE1ECFE31F00CB667A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D68C5FFD1ECFE31F00CB667A /* GoogleService-Info.plist */; };
 		D69E91381ED279CB00AE44F2 /* AppIcon1.png in Resources */ = {isa = PBXBuildFile; fileRef = D69E91371ED279CB00AE44F2 /* AppIcon1.png */; };
 		D69E913A1ED27A3000AE44F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D69E91391ED27A3000AE44F2 /* Assets.xcassets */; };
+		D6C65F911FAA2B4E00F2C193 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D6C65F901FAA2B4E00F2C193 /* GoogleService-Info.plist */; };
 		D93D4869901A68C33901B9F0 /* Pods_TravlrUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30ADB181167B3A8F93D89836 /* Pods_TravlrUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -71,14 +70,13 @@
 		D68C5FD91ECFE00100CB667A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D68C5FDB1ECFE00100CB667A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D68C5FE01ECFE00100CB667A /* TravlrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TravlrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D68C5FE41ECFE00100CB667A /* TravlrTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravlrTests.swift; sourceTree = "<group>"; };
 		D68C5FE61ECFE00100CB667A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D68C5FEB1ECFE00100CB667A /* TravlrUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TravlrUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D68C5FEF1ECFE00100CB667A /* TravlrUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravlrUITests.swift; sourceTree = "<group>"; };
 		D68C5FF11ECFE00100CB667A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D68C5FFD1ECFE31F00CB667A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D69E91371ED279CB00AE44F2 /* AppIcon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon1.png; sourceTree = "<group>"; };
 		D69E91391ED27A3000AE44F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D6C65F901FAA2B4E00F2C193 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F3B37EDCD4E5E1E051D1A3A7 /* Pods_TravlrTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TravlrTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -160,8 +158,8 @@
 		D68C5FCE1ECFE00100CB667A /* Travlr */ = {
 			isa = PBXGroup;
 			children = (
+				D6C65F901FAA2B4E00F2C193 /* GoogleService-Info.plist */,
 				D69E91371ED279CB00AE44F2 /* AppIcon1.png */,
-				D68C5FFD1ECFE31F00CB667A /* GoogleService-Info.plist */,
 				D68C5FCF1ECFE00100CB667A /* AppDelegate.swift */,
 				D69E91391ED27A3000AE44F2 /* Assets.xcassets */,
 				D65285CA1EE38AF500DB0FF0 /* Travlr-Bridging-Header.h */,
@@ -183,7 +181,6 @@
 		D68C5FE31ECFE00100CB667A /* TravlrTests */ = {
 			isa = PBXGroup;
 			children = (
-				D68C5FE41ECFE00100CB667A /* TravlrTests.swift */,
 				D68C5FE61ECFE00100CB667A /* Info.plist */,
 			);
 			path = TravlrTests;
@@ -270,23 +267,26 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Ryan Ching";
 				TargetAttributes = {
 					D68C5FCB1ECFE00100CB667A = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = TNYKHNSDV6;
+						DevelopmentTeam = LLL5MM4QVU;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 					D68C5FDF1ECFE00100CB667A = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = TNYKHNSDV6;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 						TestTargetID = D68C5FCB1ECFE00100CB667A;
 					};
 					D68C5FEA1ECFE00100CB667A = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = TNYKHNSDV6;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 						TestTargetID = D68C5FCB1ECFE00100CB667A;
 					};
@@ -319,10 +319,10 @@
 			files = (
 				D68C5FDA1ECFE00100CB667A /* LaunchScreen.storyboard in Resources */,
 				D69E91381ED279CB00AE44F2 /* AppIcon1.png in Resources */,
-				D68C5FFE1ECFE31F00CB667A /* GoogleService-Info.plist in Resources */,
 				D68C5FD51ECFE00100CB667A /* Main.storyboard in Resources */,
 				D69E913A1ED27A3000AE44F2 /* Assets.xcassets in Resources */,
 				D616F4591EE20D4B00064901 /* plus.png in Resources */,
+				D6C65F911FAA2B4E00F2C193 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,7 +500,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D68C5FE51ECFE00100CB667A /* TravlrTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,7 +556,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -565,7 +566,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -608,7 +613,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -616,7 +623,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -647,15 +658,16 @@
 			baseConfigurationReference = 7A5A709696AA84F96C39B7FC /* Pods-Travlr.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
-				DEVELOPMENT_TEAM = TNYKHNSDV6;
+				DEVELOPMENT_TEAM = LLL5MM4QVU;
 				INFOPLIST_FILE = Travlr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryanching.Travlr;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryanaching.Travlr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Travlr/Travlr-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -664,14 +676,15 @@
 			baseConfigurationReference = 34500665427DAA7A60AB8CC4 /* Pods-Travlr.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
-				DEVELOPMENT_TEAM = TNYKHNSDV6;
+				DEVELOPMENT_TEAM = LLL5MM4QVU;
 				INFOPLIST_FILE = Travlr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryanching.Travlr;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryanaching.Travlr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "Travlr/Travlr-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -686,7 +699,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryanching.TravlrTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Travlr.app/Travlr";
 			};
 			name = Debug;
@@ -702,7 +716,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryanching.TravlrTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Travlr.app/Travlr";
 			};
 			name = Release;
@@ -717,7 +732,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryanching.TravlrUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = Travlr;
 			};
 			name = Debug;
@@ -732,7 +748,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryanching.TravlrUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = Travlr;
 			};
 			name = Release;

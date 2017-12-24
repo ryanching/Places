@@ -37,18 +37,12 @@ class ViewController: UIViewController, GMSMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        // Create a GMSCameraPosition that tells the map to display the
-        // coordinate -33.86,151.20 at zoom level 6.
+
         let camera = GMSCameraPosition.camera(withLatitude: 38.9072, longitude: -77.0369, zoom: 6.0)
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         mapView.delegate = self
         view = mapView
-//        let southWest = CLLocationCoordinate2D(latitude: 40.712216, longitude: -74.22655)
-//        let northEast = CLLocationCoordinate2D(latitude: 40.773941, longitude: -74.12544)
-//        let overlayBounds = GMSCoordinateBounds(coordinate: southWest, coordinate: northEast)
-//        let overlay = GMSGroundOverlay(bounds: overlayBounds, icon: UIImage(named: "plus"))
-//        overlay.map = mapView
+
         do {
             // Set the map style by passing a valid JSON string.
             mapView.mapStyle = try GMSMapStyle(jsonString: kMapStyle)
@@ -126,7 +120,7 @@ class ViewController: UIViewController, GMSMapViewDelegate {
        
     }
     
-    func removeMarker(){
+    @objc func removeMarker(){
         print("REMOVE MARKERRRRRR")
     }
     
@@ -192,7 +186,7 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func addMarker() {
+    @objc func addMarker() {
         let alert = UIAlertController(title: "Instructions:", message: "Press and hold on a location to place a marker.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)

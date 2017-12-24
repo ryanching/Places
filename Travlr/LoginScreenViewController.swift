@@ -16,7 +16,6 @@ class LoginScreenViewController: UIViewController {
     @IBAction func goToRegisterScreen(_ sender: Any) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let nextViewController = storyBoard.instantiateViewController(withIdentifier: "register")
- 
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
     @IBOutlet weak var passwordTextField: UITextField!
@@ -31,14 +30,11 @@ class LoginScreenViewController: UIViewController {
         view.addGestureRecognizer(pan)
         view.addGestureRecognizer(tap)  // Allows dismissal of keyboard on tap anywhere on screen besides the keyboard itself
         view.addGestureRecognizer(swipe)
-        // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.isHidden = true
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func tryAutoLogin(){
@@ -59,7 +55,6 @@ class LoginScreenViewController: UIViewController {
                     defaults.set(username, forKey: "username")
                     defaults.set(password, forKey: "password")
                     let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-                    
                     let nextViewController = storyBoard.instantiateViewController(withIdentifier: "tabs")
                     self.present(nextViewController, animated:true, completion:nil)
                     
@@ -85,7 +80,6 @@ class LoginScreenViewController: UIViewController {
                 defaults.set(username, forKey: "username")
                 defaults.set(password, forKey: "password")
                 let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-                
                 let nextViewController = storyBoard.instantiateViewController(withIdentifier: "tabs")
                 self.present(nextViewController, animated:true, completion:nil)
                 
@@ -97,14 +91,5 @@ class LoginScreenViewController: UIViewController {
         //Causes the view (or one of its embedded text fields) to resign the first responder status and drop into background
         view.endEditing(true)
     }
-    
-    /*
-    // MARK: - Navigation
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

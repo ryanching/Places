@@ -27,18 +27,8 @@ public protocol DKImagePickerControllerUIDelegate {
      */
     func prepareLayout(_ imagePickerController: DKImagePickerController, vc: UIViewController)
     
-    /**
-     Returns a custom camera.
-     
-     **Note**
-     
-     If you are using a UINavigationController as the custom camera,
-     you should also set the picker's modalPresentationStyle to .overCurrentContext, like this:
-     
-     ```
-     pickerController.modalPresentationStyle = .overCurrentContext
-     ```
-     
+   
+     /*
      - Parameter imagePickerController: DKImagePickerController
      - Returns: The returned `UIViewControlelr` must conform to the `DKImagePickerControllerCameraProtocol`.
      */
